@@ -1,0 +1,22 @@
+{
+    "experiment_id": "exp_api_integration",
+    "title": "External REST API Data Consumption",
+    "objective": "To master the process of requesting and extracting data from external web services using Python. The student will use the 'requests' library to execute HTTP GET methods, handle response status codes, and parse JSON payloads.",
+    "steps": [
+        "1. Start by importing the necessary module: `import requests`.",
+        "2. Define a target URL string pointing to a public API endpoint. For testing, use `url = 'https://jsonplaceholder.typicode.com/posts/1'`.",
+        "3. Create a `try...except` block to gracefully handle potential network failures or timeouts.",
+        "4. Inside the `try` block, execute a GET request: `response = requests.get(url, timeout=5)`.",
+        "5. Before trying to parse data, always verify the network call succeeded by checking `if response.status_code == 200:`.",
+        "6. If successful, extract the raw payload into a Python dictionary using `data = response.json()`.",
+        "7. Isolate and print a specific field from the dictionary, such as `print(f\"Post Title: {data['title']}\")`.",
+        "8. In the `except` block, catch `requests.exceptions.RequestException` and print an error message indicating the network connection failed."
+    ],
+    "rubric": {
+        "q1": "What is the difference between an HTTP 200 code and an HTTP 404 code?",
+        "q2": "Why is it dangerous to call `response.json()` *without* first verifying the `status_code`?",
+        "q3": "What is the purpose of the `timeout=5` argument in the `requests.get()` function call?",
+        "q4": "If an API endpoint requires a secret authentication token, how would you securely include it in the `requests.get()` call?",
+        "q5": "What is the difference between an HTTP GET request and an HTTP POST request in the context of REST APIs?"
+    }
+}

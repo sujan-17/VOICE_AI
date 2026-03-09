@@ -1,0 +1,22 @@
+{
+    "experiment_id": "exp_linked_list",
+    "title": "Singly Linked List Data Structure",
+    "objective": "To build a fundamental dynamic data structure from scratch. The student will understand memory reference chaining by creating Node objects that point to subsequent nodes, implementing both insertion and traversal methods.",
+    "steps": [
+        "1. Define a `Node` class. Its `__init__` should take `data` as an argument and initialize `self.data = data` and `self.next = None`.",
+        "2. Define a `LinkedList` class. Its `__init__` should simply initialize `self.head = None`. This represents the entry point of the list.",
+        "3. Inside `LinkedList`, create an `append(data)` method. First, instantiate a new `Node(data)`.",
+        "4. In the `append` method, check if the list is completely empty (`if not self.head:`). If so, set `self.head = new_node` and return.",
+        "5. If it's not empty, we must traverse to the end. Create a pointer `current = self.head`.",
+        "6. Use a `while current.next:` loop to advance the pointer until it reaches the last node (`current = current.next`).",
+        "7. Finally, link the new node: `current.next = new_node`.",
+        "8. Create a `display()` method that initializes `current = self.head` and prints `current.data` while advancing `current = current.next` until it reaches `None`."
+    ],
+    "rubric": {
+        "q1": "Unlike arrays, Linked Lists do not store elements in contiguous memory locations. What is the primary advantage of this?",
+        "q2": "What happens if you accidentally write `while current:` instead of `while current.next:` when appending a new node?",
+        "q3": "In the implementation provided, appending a node takes O(n) time. How could we modify the `LinkedList` class to make appending take O(1) time?",
+        "q4": "How would the process of inserting a node at the absolute *beginning* of the list differ from appending?",
+        "q5": "What is a 'memory leak', and do we have to worry about manually deleting removed nodes in Python like we do in C++?"
+    }
+}

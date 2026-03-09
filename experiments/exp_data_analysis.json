@@ -1,0 +1,22 @@
+{
+    "experiment_id": "exp_data_analysis",
+    "title": "Exploratory Data Analysis with Pandas",
+    "objective": "To introduce programmatic data manipulation using the Pandas library. The student will construct DataFrames, perform vectorized mathematical operations, and apply conditional filtering to clean and analyze datasets.",
+    "steps": [
+        "1. Import the library using standard convention: `import pandas as pd`.",
+        "2. Define a small mock dataset locally using a Python dictionary: `data = {'Name': ['Alice', 'Bob', 'Charlie', 'David'], 'Age': [24, 27, 22, 32], 'Score': [85, 90, 78, 92]}`.",
+        "3. Convert this raw dictionary into a structured, two-dimensional table by calling `df = pd.DataFrame(data)`.",
+        "4. Print `df.head()` to visually inspect the first few rows of the generated table and ensure columns aligned correctly.",
+        "5. Perform a basic statistical calculation on a single column (a Pandas Series) by running `avg_age = df['Age'].mean()`.",
+        "6. Isolate the row corresponding to the highest score by first finding the maximum score using `max_val = df['Score'].max()`.",
+        "7. Filter the entire dataset based on a condition to find 'High Performers'. Use boolean indexing: `high_performers = df[df['Score'] >= 90]`.",
+        "8. Output the resulting sub-table by printing `high_performers`."
+    ],
+    "rubric": {
+        "q1": "Structurally, what is the exact difference between a 'Pandas Series' and a 'Pandas DataFrame'?",
+        "q2": "If a dataset contained missing records (NaN values), what Pandas method would you use to remove those specific rows?",
+        "q3": "What command would instantly generate a comprehensive statistical summary (min, max, mean, standard deviation) for all numerical columns simultaneously?",
+        "q4": "Explain what 'boolean indexing' is and why it is significantly faster than using a Python `for` loop to filter rows.",
+        "q5": "If you had a real CSV file on your computer named 'data.csv', what exact Pandas function would you use to import it into a DataFrame?"
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "experiment_id": "exp_binary_search",
+    "title": "Binary Search Algorithm Optimization",
+    "objective": "To implement and analyze the Binary Search algorithm in Python. This experiment teaches the divide-and-conquer paradigm by demonstrating how a search space in a sorted collection can be halved repeatedly, drastically outperforming linear search.",
+    "steps": [
+        "1. Define a function `binary_search(arr, target)` that accepts a **sorted** array and a value to find.",
+        "2. Initialize two pointer variables: define `low = 0` as the start index and `high = len(arr) - 1` as the end index.",
+        "3. Create a `while` loop that will continue executing as long as the search space is valid: `while low <= high:`.",
+        "4. Inside the loop, calculate the middle index. Use integer division to avoid float indices: `mid = (low + high) // 2`.",
+        "5. Check if the target is found: `if arr[mid] == target:`. If so, immediately `return mid` to specify the index.",
+        "6. If the target is greater than the middle element (`target > arr[mid]`), eliminate the left half by updating the lower bound: `low = mid + 1`.",
+        "7. If the target is less than the middle element (`target < arr[mid]`), eliminate the right half by updating the upper bound: `high = mid - 1`.",
+        "8. If the `while` loop terminates without returning, it means the target does not exist in the array. `return -1`."
+    ],
+    "rubric": {
+        "q1": "What is the absolute critical prerequisite regarding the input data before a Binary Search can be successfully performed?",
+        "q2": "What happens if you use standard float division `/` instead of integer division `//` when calculating the `mid` index in Python 3?",
+        "q3": "What is the worst-case Big O time complexity of Binary Search, and how does it compare conceptually to Linear Search?",
+        "q4": "In languages like Java or C++, the statement `(low + high) / 2` can cause a fatal overflow bug for massive arrays. How does Python handle this, or what is the safer formula `low + (high - low) / 2` used for?",
+        "q5": "Could Binary Search be implemented using recursion instead of a `while` loop? If so, what is the space complexity tradeoff?"
+    }
+}

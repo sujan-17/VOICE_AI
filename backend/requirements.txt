@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+python-multipart
+openai
+faster-whisper
+edge-tts
+soundfile
+numpy
+python-dotenv

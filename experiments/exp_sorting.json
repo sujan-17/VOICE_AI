@@ -1,0 +1,17 @@
+{
+  "experiment_id": "exp_sorting_01",
+  "title": "Bubble Sort Implementation",
+  "objective": "To understand and implement the Bubble Sort algorithm in Python, identifying its time complexity and potential optimizations.",
+  "steps": [
+    "1. Define a list of unsorted numbers (e.g., [64, 34, 25, 12, 22, 11, 90]).",
+    "2. Write an outer loop that iterates over the entire array length 'n'.",
+    "3. Write an inner loop that iterates from 0 to 'n - i - 1'.",
+    "4. Inside the inner loop, compare adjacent elements. If the left element is greater than the right, swap them.",
+    "5. Add a boolean flag to track if any swaps occurred in the inner loop. If no swaps occurred, break the outer loop (optimization)."
+  ],
+  "rubric": {
+    "q1": "What is the worst-case time complexity of Bubble Sort and why?",
+    "q2": "How does the boolean flag optimization improve the best-case time complexity?",
+    "q3": "Why does the inner loop only run up to 'n - i - 1' instead of 'n'?"
+  }
+}
