@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background: radial-gradient(circle at top, #0f172a 0%, #020617 100%);
+    color: #f8fafc;
+    margin: 0;
+    font-family: 'Outfit', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-slate-900/40 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl;
+  }
+  
+  .glass-input {
+    @apply bg-slate-800/50 backdrop-blur-md border border-white/5 rounded-xl focus:border-blue-500/50 transition-all outline-none text-white placeholder-gray-400;
+  }
+
+  .premium-button {
+    @apply bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/25 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+}
+
+@layer utilities {
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-pulse-glow {
+    animation: pulseGlow 2s infinite;
+  }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); transform: scale(1.1); }
+  70% { box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); transform: scale(1.15); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); transform: scale(1.1); }
+}
