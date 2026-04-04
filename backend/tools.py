@@ -91,7 +91,7 @@ TOOL_DEFINITIONS = [
         "type": "function",
         "function": {
             "name": "run_python_code",
-            "description": "Runs Python code safely and returns the result (stdout or stderr). Use this to verify student code.",
+            "description": "Runs Python code and returns stdout or stderr. Use only when the user provides code or asks to verify actual runtime behavior.",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -105,7 +105,7 @@ TOOL_DEFINITIONS = [
         "type": "function",
         "function": {
             "name": "check_syntax",
-            "description": "Checks Python code for syntax errors without executing it.",
+            "description": "Checks Python code for syntax errors without running it. Prefer this when the user asks about syntax, formatting, or likely parse errors.",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -119,7 +119,7 @@ TOOL_DEFINITIONS = [
         "type": "function",
         "function": {
             "name": "analyze_time_complexity",
-            "description": "Returns deterministic standard Big O time and space complexity for a given algorithm (e.g., 'bubble sort').",
+            "description": "Returns deterministic Big O time and space complexity for a known algorithm. Use for complexity questions instead of answering from memory.",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -133,7 +133,7 @@ TOOL_DEFINITIONS = [
         "type": "function",
         "function": {
             "name": "generate_test_cases",
-            "description": "Returns deterministic standard test cases for a given topic like 'sorting' or 'binary search'.",
+            "description": "Returns deterministic standard test cases for a supported topic. Use when the user asks for examples, validations, or edge cases.",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -147,7 +147,7 @@ TOOL_DEFINITIONS = [
         "type": "function",
         "function": {
             "name": "get_experiment_hint",
-            "description": "Pulls a specific hint based on the experiment ID and step number.",
+            "description": "Returns the exact experiment hint for a specific step. Use this for step-specific lab questions instead of inventing instructions.",
             "parameters": {
                 "type": "object",
                 "properties": {
