@@ -847,7 +847,7 @@ async def generate_audio(
     output_path = os.path.join(OUTPUT_DIR, output_filename)
     await tts.text_to_speech(request.text, output_path)
     cache_buster = str(uuid.uuid4())[:8]
-    return {"audio_url": f"http://localhost:8000/outputs/{output_filename}?v={cache_buster}"}
+    return {"audio_url": f"{settings.public_base_url}/outputs/{output_filename}?v={cache_buster}"}
 
 
 if __name__ == "__main__":
