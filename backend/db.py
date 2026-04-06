@@ -10,7 +10,13 @@ def _sqlite_connect_args():
     return {}
 
 
-engine = create_engine(settings.database_url, future=True, connect_args=_sqlite_connect_args())
+engine = create_engine(
+    settings.database_url,
+    future=True,
+    connect_args=_sqlite_connect_args(),
+    pool_pre_ping=True,
+    pool_recycle=300,
+)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine, future=True)
 Base = declarative_base()
 
