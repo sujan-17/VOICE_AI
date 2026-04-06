@@ -1,9 +1,16 @@
 fastapi
 uvicorn
 python-multipart
-openai
 faster-whisper
 edge-tts
 soundfile
 numpy
 python-dotenv
+sqlalchemy
+alembic
+passlib[bcrypt]
+python-jose[cryptography]
+email-validator
+google-genai
+psycopg[binary]
+google-auth

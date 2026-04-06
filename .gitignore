@@ -28,11 +28,16 @@ backend/venv/
 .env
 .env.*
 !.env.example
+frontend/.env
+frontend/.env.*
 
 # Backend runtime artifacts
 backend/outputs/
 backend/*.log
 backend/metrics_report.txt
+backend/*.db
+backend/*.sqlite
+backend/*.sqlite3
 
 # Node / frontend
 node_modules/
@@ -40,6 +45,7 @@ frontend/node_modules/
 frontend/build/
 frontend/.cache/
 frontend/.eslintcache
+frontend/coverage/
 
 # Logs
 *.log
@@ -53,3 +59,8 @@ build/
 tmp/
 temp/
 *.tmp
+
+# Package manager / OS
+package-lock.json.bak
+yarn.lock.bak
+pnpm-lock.yaml.bak

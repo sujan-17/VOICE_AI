@@ -4,6 +4,9 @@ import ast
 import json
 import os
 
+from db import SessionLocal
+from models import Experiment
+
 def run_python_code(code: str):
     """Executes python code and returns the output or error."""
     try:
@@ -62,17 +65,28 @@ def generate_test_cases(topic: str):
 
 def get_experiment_hint(step_number: int, exp_id: str):
     """Pulls a specific hint based on the experiment ID and step number."""
-    path = os.path.join("..", "experiments", f"{exp_id}.json")
     try:
+        db = SessionLocal()
+        try:
+            experiment = db.query(Experiment).filter(Experiment.slug == exp_id).first()
+            if experiment:
+                steps = experiment.steps or []
+                if 0 < step_number <= len(steps):
+                    return f"Hint for Step {step_number}: {steps[step_number - 1]}"
+                return f"Invalid step number: {step_number}. Total steps: {len(steps)}."
+        finally:
+            db.close()
+
+        path = os.path.join("..", "experiments", f"{exp_id}.json")
         if not os.path.exists(path):
             return f"Experiment {exp_id} not found."
+
         with open(path, "r") as f:
             data = json.load(f)
-            steps = data.get("steps", [])
-            if 0 < step_number <= len(steps):
-                return f"Hint for Step {step_number}: {steps[step_number-1]}"
-            else:
-                return f"Invalid step number: {step_number}. Total steps: {len(steps)}."
+        steps = data.get("steps", [])
+        if 0 < step_number <= len(steps):
+            return f"Hint for Step {step_number}: {steps[step_number-1]}"
+        return f"Invalid step number: {step_number}. Total steps: {len(steps)}."
     except Exception as e:
         return f"Error loading hints: {str(e)}"
 
@@ -84,78 +98,3 @@ AVAILABLE_TOOLS = {
     "generate_test_cases": generate_test_cases,
     "get_experiment_hint": get_experiment_hint
 }
-
-# This describes the tools to the LLM so it knows how to use them
-TOOL_DEFINITIONS = [
-    {
-        "type": "function",
-        "function": {
-            "name": "run_python_code",
-            "description": "Runs Python code and returns stdout or stderr. Use only when the user provides code or asks to verify actual runtime behavior.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "code": {"type": "string", "description": "The full python code to execute."}
-                },
-                "required": ["code"]
-            }
-        }
-    },
-    {
-        "type": "function",
-        "function": {
-            "name": "check_syntax",
-            "description": "Checks Python code for syntax errors without running it. Prefer this when the user asks about syntax, formatting, or likely parse errors.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "code": {"type": "string", "description": "The python code to check."}
-                },
-                "required": ["code"]
-            }
-        }
-    },
-    {
-        "type": "function",
-        "function": {
-            "name": "analyze_time_complexity",
-            "description": "Returns deterministic Big O time and space complexity for a known algorithm. Use for complexity questions instead of answering from memory.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "algorithm_name": {"type": "string", "description": "Name of the algorithm (e.g., 'merge sort')."}
-                },
-                "required": ["algorithm_name"]
-            }
-        }
-    },
-    {
-        "type": "function",
-        "function": {
-            "name": "generate_test_cases",
-            "description": "Returns deterministic standard test cases for a supported topic. Use when the user asks for examples, validations, or edge cases.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "topic": {"type": "string", "description": "Topic to generate test cases for (e.g., 'sorting')."}
-                },
-                "required": ["topic"]
-            }
-        }
-    },
-    {
-        "type": "function",
-        "function": {
-            "name": "get_experiment_hint",
-            "description": "Returns the exact experiment hint for a specific step. Use this for step-specific lab questions instead of inventing instructions.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "step_number": {"type": "integer", "description": "The step number the student is on (1-indexed)."},
-                    "exp_id": {"type": "string", "description": "The current experiment ID (e.g., 'exp_sorting')."}
-                },
-                "required": ["step_number", "exp_id"]
-            }
-        }
-    }
-]

@@ -1,78 +1,39 @@
 # Voice Lab Assistant
 
-Voice Lab Assistant is a full-stack AI voice application for guided lab experiments.
-It supports:
-- Speech-to-text input (voice mode)
-- Text input (chat mode)
-- LLM-generated responses in Assistant and Evaluator modes
-- Text-to-speech playback of AI responses
-- Session memory and latency/RTF metrics logging
+Voice Lab Assistant is a full-stack AI learning platform for guided programming labs, viva evaluation, voice interaction, and performance tracking.
 
-## Tech Stack
+## Stack
 
-- Backend: FastAPI (Python)
-- Frontend: React + Tailwind CSS
-- AI/Audio services:
-- LLM via OpenAI-compatible API client (`openai` package)
-- STT via `faster-whisper`
-- TTS via `edge-tts`
+- Backend: FastAPI, SQLAlchemy, JWT auth
+- Frontend: React, React Router, Tailwind CSS
+- AI: Gemini
+- Voice: Faster-Whisper for STT and Edge TTS for TTS
+- Database: SQLite or PostgreSQL through `DATABASE_URL`
 
-## Project Structure
+## Features
 
-```text
-voice-lab-assistant/
-├── backend/
-│   ├── main.py
-│   ├── llm_handler.py
-│   ├── stt_service.py
-│   ├── tts_service.py
-│   ├── memory_manager.py
-│   ├── metrics.py
-│   └── requirements.txt
-├── frontend/
-│   ├── src/
-│   └── package.json
-└── experiments/
-    └── *.json
-```
+- Student and staff authentication
+- Google login for students
+- Experiment-aware assistant mode
+- Evaluator mode with AI-generated viva questions
+- Text and voice interaction
+- Audio playback of AI responses
+- Student history, scores, and latency metrics
+- Staff dashboard and experiment management
 
-## Prerequisites
+## Setup
 
-- Python 3.10+
-- Node.js 18+ and npm
-- Git (optional, for version control)
-
-## Environment Variables
-
-Create a `.env` file in the project root (or in `backend/`) with:
-
-```env
-NEXUS_API_KEY=your_api_key
-NEXUS_BASE_URL=https://your-openai-compatible-endpoint
-LLM_MODEL=gpt-4.1-nano
-```
-
-Notes:
-- `LLM_MODEL` is optional (defaults to `gpt-4.1-nano`).
-- `NEXUS_BASE_URL` must be an OpenAI-compatible base URL.
-
-## Backend Setup (FastAPI)
-
-From project root:
+### Backend
 
 ```bash
 cd backend
 python -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
-python main.py
+uvicorn main:app --reload
 ```
 
-Backend runs at: `http://localhost:8000`
-
-## Frontend Setup (React)
-
-Open a second terminal from project root:
+### Frontend
 
 ```bash
 cd frontend
@@ -80,33 +41,43 @@ npm install
 npm start
 ```
 
-Frontend runs at: `http://localhost:3000`
+## Environment
 
-## How to Use
+Project root `.env`:
 
-1. Start backend (`python main.py` in `backend/`).
-2. Start frontend (`npm start` in `frontend/`).
-3. Open `http://localhost:3000`.
-4. Select an experiment from the dropdown.
-5. Use:
-- Mic button for voice input, or
-- Text box for typed input.
-6. Switch between:
-- Assistant Mode (guidance)
-- Evaluator Mode (rubric-based questioning)
+```env
+GEMINI_API_KEY=your_gemini_api_key
+GEMINI_MODEL=gemini-2.5-flash
+DATABASE_URL=sqlite:///./voice_lab.db
+JWT_SECRET=your_long_random_secret
+GOOGLE_CLIENT_ID=your_google_client_id
+```
 
-## API Endpoints (Backend)
+Frontend `frontend/.env`:
 
-- `GET /experiments` - list available experiment IDs
-- `POST /process-voice` - transcribe + generate response
-- `POST /process-text` - text-only response generation
-- `POST /generate-audio` - TTS for given text
-- `GET /outputs/...` - static audio file serving
+```env
+REACT_APP_GOOGLE_CLIENT_ID=your_google_client_id
+```
 
-## Troubleshooting
+## Main Routes
 
-- If frontend cannot connect, ensure backend is running on port `8000`.
-- If no AI response is generated, verify `.env` values (`NEXUS_API_KEY`, `NEXUS_BASE_URL`).
-- If microphone fails, allow browser mic permissions.
-- If Whisper/TTS feels slow on first run, initial model/audio setup may take longer.
+- `POST /auth/login`
+- `POST /auth/register`
+- `POST /auth/google`
+- `GET /auth/me`
+- `GET /experiments`
+- `GET /student/dashboard`
+- `GET /student/history`
+- `POST /process-text`
+- `POST /process-voice`
+- `POST /generate-audio`
+- `GET /staff/dashboard`
+- `POST /staff/experiments`
+- `PUT /staff/experiments/{slug}`
+- `DELETE /staff/experiments/{slug}`
 
+## Notes
+
+- Tables are created automatically on backend startup.
+- Experiments are seeded from the `experiments/` folder.
+- The evaluator now generates its own five viva questions and scores answers without predefined rubric questions.

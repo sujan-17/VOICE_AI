@@ -31,3 +31,19 @@ class PerformanceMetrics:
         
         with open("metrics_report.txt", "a") as f:
             f.write(report)
+
+    def as_record(
+        self,
+        request_type: str,
+        total_latency: float,
+        llm_latency: float,
+        stt_latency: float = 0.0,
+        rtf: float = 0.0,
+    ):
+        return {
+            "request_type": request_type,
+            "total_latency": total_latency,
+            "llm_latency": llm_latency,
+            "stt_latency": stt_latency,
+            "rtf": rtf,
+        }
